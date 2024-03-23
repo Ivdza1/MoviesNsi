@@ -20,4 +20,8 @@
       <ProjectReference Include="..\MoviesNsi.Domain\MoviesNsi.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Actor\Commands\" />
+    </ItemGroup>
+
 </Project>
