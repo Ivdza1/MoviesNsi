@@ -7,14 +7,14 @@ using MoviesNsi.Domain.Entities;
 
 namespace MoviesNsi.Infrastructure.Contexts;
 
-public class MoviesNsiDbContext(DbContextOptions<MoviesNsiDbContext> options) : IdentityDbContext<ApplicationUser, 
+public class MoviesNsiDbContext() : IdentityDbContext<ApplicationUser, 
     ApplicationRole,
     string,
     IdentityUserClaim<string>,
     ApplicationUserRole,
     IdentityUserLogin<string>,
     IdentityRoleClaim<string>,
-    IdentityUserToken<string>>(options), IMoviesNsiDbContext
+    IdentityUserToken<string>>, IMoviesNsiDbContext
 {
     protected override void OnModelCreating(ModelBuilder builder)
     {

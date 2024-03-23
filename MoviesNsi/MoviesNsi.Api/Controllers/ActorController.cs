@@ -24,7 +24,8 @@ public class ActorController(IMoviesNsiDbContext dbContext) : ApiControllerBase
     [HttpPost("Create")]
     public async Task<IActionResult> Create()
     {
-        var actor = new Actor("Glumac", 34);
+        var movie = new Movie("film", "film", 7);
+        var actor = new Actor("Glumac", 34, movie);
         dbContext.Actors.Add(actor);
         await dbContext.SaveChangesAsync(new CancellationToken());
         

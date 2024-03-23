@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesNsi.Infrastructure.Contexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MoviesNsi.Infrastructure.Migrations
 {
     [DbContext(typeof(MoviesNsiDbContext))]
-    partial class MoviesNsiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240323133003_ChangeActorTable")]
+    partial class ChangeActorTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,6 +156,7 @@ namespace MoviesNsi.Infrastructure.Migrations
             modelBuilder.Entity("MoviesNsi.Domain.Entities.Actor", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<int>("Age")
@@ -162,12 +166,7 @@ namespace MoviesNsi.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
 
                     b.ToTable("Actors", (string)null);
                 });
@@ -332,27 +331,6 @@ namespace MoviesNsi.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MoviesNsi.Domain.Entities.Movie", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Movies", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("MoviesNsi.Domain.Entities.ApplicationRole", null)
@@ -389,17 +367,6 @@ namespace MoviesNsi.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MoviesNsi.Domain.Entities.Actor", b =>
-                {
-                    b.HasOne("MoviesNsi.Domain.Entities.Movie", "Movie")
-                        .WithMany("Actors")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-                });
-
             modelBuilder.Entity("MoviesNsi.Domain.Entities.ApplicationUserRole", b =>
                 {
                     b.HasOne("MoviesNsi.Domain.Entities.ApplicationRole", "Role")
@@ -427,11 +394,6 @@ namespace MoviesNsi.Infrastructure.Migrations
             modelBuilder.Entity("MoviesNsi.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("Roles");
-                });
-
-            modelBuilder.Entity("MoviesNsi.Domain.Entities.Movie", b =>
-                {
-                    b.Navigation("Actors");
                 });
 #pragma warning restore 612, 618
         }
