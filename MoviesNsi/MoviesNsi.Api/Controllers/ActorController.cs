@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MoviesNsi.Application.Common.Dto.Actor;
 using MoviesNsi.Application.Common.Interfaces;
 using MoviesNsi.Application.Common.Mappers;
 using MoviesNsi.Domain.Entities;
@@ -28,13 +29,18 @@ public class ActorController(IMoviesNsiDbContext dbContext) : ApiControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create(ActorCreateDto actorDto)
     {
-        var movie = new Movie("film", "film", 7);
-        var actor = new Actor("Glumac", 34, movie);
-        dbContext.Actors.Add(actor);
+        var movie = await dbContext.Movies
+            .Where(x => x.Id == actorDto.MovieId)
+            .FirstOrDefaultAsync();
+
+        if (movie == null) return Ok();
+
+        var entity = actorDto.ToCustomDto(movie);
+
+        dbContext.Actors.Add(entity);
         await dbContext.SaveChangesAsync(new CancellationToken());
-        
         return Ok();
     }
 }
