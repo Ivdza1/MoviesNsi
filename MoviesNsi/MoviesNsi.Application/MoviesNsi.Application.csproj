@@ -16,4 +16,8 @@
       <PackageReference Include="Riok.Mapperly" Version="3.4.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MoviesNsi.Domain\MoviesNsi.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

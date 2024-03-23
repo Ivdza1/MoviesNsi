@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MoviesNsi.Application\MoviesNsi.Application.csproj" />
+      <ProjectReference Include="..\MoviesNsi.Infrastructure\MoviesNsi.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
