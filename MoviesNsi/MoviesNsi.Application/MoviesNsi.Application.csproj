@@ -23,7 +23,6 @@
     <ItemGroup>
       <Folder Include="Actors\Commands\" />
       <Folder Include="Movies\Commands\" />
-      <Folder Include="Movies\Queries\" />
     </ItemGroup>
 
 </Project>

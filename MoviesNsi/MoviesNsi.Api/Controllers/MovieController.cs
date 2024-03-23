@@ -1,27 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesNsi.Application.Common.Interfaces;
+using MoviesNsi.Application.Movies.Queries;
 using MoviesNsi.Domain.Entities;
 
 namespace MoviesNsi.Controllers;
 
-[ApiController]
-[Route("Movie")]
 public class MovieController(IMoviesNsiDbContext dbContext) : ApiControllerBase
 {
 
-    [HttpGet("Info")]
-    public async Task<IActionResult> Info()
-    {
+    [HttpGet]
+    public async Task<IActionResult> Info([FromQuery] MovieInfoQuery query) => Ok(await Mediator.Send(query));
 
-        var result = await dbContext.Movies
-            .Include(x => x.Actors)
-            .ToListAsync();
-        
-        return Ok();
-    }
 
-    [HttpPost("Create")]
+    [HttpPost]
     public async Task<IActionResult> Create()
     {
         var movie = new Movie(Guid.NewGuid(),"film", "film", 7);

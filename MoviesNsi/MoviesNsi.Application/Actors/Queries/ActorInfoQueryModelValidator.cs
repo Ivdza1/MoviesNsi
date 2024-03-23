@@ -1,5 +1,4 @@
 using FluentValidation;
-using MoviesNsi.Application.Actor.Queries;
 
 namespace MoviesNsi.Application.Actors.Queries;
 

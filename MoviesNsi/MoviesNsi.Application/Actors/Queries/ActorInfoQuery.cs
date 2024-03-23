@@ -4,7 +4,7 @@ using MoviesNsi.Application.Common.Dto.Actor;
 using MoviesNsi.Application.Common.Interfaces;
 using MoviesNsi.Application.Common.Mappers;
 
-namespace MoviesNsi.Application.Actor.Queries;
+namespace MoviesNsi.Application.Actors.Queries;
 
 public record ActorInfoQuery(string Id) : IRequest<ActorInfoDto?>;
 

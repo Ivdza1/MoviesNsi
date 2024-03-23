@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MoviesNsi.Application.Actor.Queries;
+using MoviesNsi.Application.Actors.Queries;
 using MoviesNsi.Application.Common.Dto.Actor;
 using MoviesNsi.Application.Common.Interfaces;
 using MoviesNsi.Application.Common.Mappers;
