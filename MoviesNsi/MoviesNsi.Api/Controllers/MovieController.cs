@@ -24,7 +24,7 @@ public class MovieController(IMoviesNsiDbContext dbContext) : ApiControllerBase
     [HttpPost("Create")]
     public async Task<IActionResult> Create()
     {
-        var movie = new Movie("film", "film", 7);
+        var movie = new Movie(Guid.NewGuid(),"film", "film", 7);
         dbContext.Movies.Add(movie);
         await dbContext.SaveChangesAsync(new CancellationToken());
         

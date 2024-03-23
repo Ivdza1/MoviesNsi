@@ -4,9 +4,9 @@ public class Movie
 {
     private Movie() {}
 
-    public Movie(string name, string description, int rating)
+    public Movie(Guid id, string name, string description, int rating)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Name = name;
         Description = description;
         Rating = rating;

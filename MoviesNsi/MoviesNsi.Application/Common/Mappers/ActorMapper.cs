@@ -12,7 +12,7 @@ public static partial class ActorMapper
 
     public static Domain.Entities.Actor ToCustomDto(this ActorCreateDto dto, Movie movie)
     {
-        var actor = new Domain.Entities.Actor(dto.FullName, dto.Age, movie);
+        var actor = new Domain.Entities.Actor(dto.FullName, dto.Age, dto.MovieId);
         return actor;
     }
     

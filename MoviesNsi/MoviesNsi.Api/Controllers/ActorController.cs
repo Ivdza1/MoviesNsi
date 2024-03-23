@@ -13,11 +13,11 @@ public class ActorController(IMoviesNsiDbContext dbContext) : ApiControllerBase
     [HttpGet]
     public async Task<IActionResult> Info([FromQuery] ActorInfoQuery query) => Ok(await Mediator.Send(query));
 
-    [HttpPost("Create")]
+    [HttpPost]
     public async Task<IActionResult> Create(ActorCreateDto actorDto)
     {
         var movie = await dbContext.Movies
-            .Where(x => x.Id == actorDto.MovieId)
+            .Where(x => x.Id.Equals(actorDto.MovieId))
             .FirstOrDefaultAsync();
 
         if (movie == null) return Ok();
