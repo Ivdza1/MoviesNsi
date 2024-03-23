@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using MoviesNsi.Application;
+using MoviesNsi.Filters;
 using MoviesNsi.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers(options => options.Filters.Add<ApiExceptionFilterAttribute>());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
