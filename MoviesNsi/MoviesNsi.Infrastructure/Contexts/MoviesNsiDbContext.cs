@@ -2,18 +2,19 @@ using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MoviesNsi.Application.Common.Interfaces;
 using MoviesNsi.Domain.Entities;
 
 namespace MoviesNsi.Infrastructure.Contexts;
 
-public class MoviesNsiDbContext() : IdentityDbContext<ApplicationUser, 
+public class MoviesNsiDbContext(DbContextOptions<MoviesNsiDbContext> options) : IdentityDbContext<ApplicationUser, 
     ApplicationRole,
     string,
     IdentityUserClaim<string>,
     ApplicationUserRole,
     IdentityUserLogin<string>,
     IdentityRoleClaim<string>,
-    IdentityUserToken<string>>
+    IdentityUserToken<string>>(options), IMoviesNsiDbContext
 {
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -23,4 +24,12 @@ public class MoviesNsiDbContext() : IdentityDbContext<ApplicationUser,
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Host=localhost;Username=postgres;Password=root;Database=movies");
+
+    public DbSet<Actor> Actors => Set<Actor>();
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
+    {
+        var result = await base.SaveChangesAsync(cancellationToken);
+        return result;
+    }
 }

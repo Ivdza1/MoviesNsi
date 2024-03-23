@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MoviesNsi.Application.Common.Interfaces;
 using MoviesNsi.Infrastructure.Configuration;
 using MoviesNsi.Infrastructure.Contexts;
 
@@ -18,6 +19,8 @@ public static class DependencyInjection
                 .UseNpgsql(dbConfiguration.ConnectionString,
                 x =>
                     x.MigrationsAssembly(typeof(MoviesNsiDbContext).Assembly.FullName)));
+
+        services.AddScoped<IMoviesNsiDbContext>(provider => provider.GetRequiredService<MoviesNsiDbContext>());
         
         return services;
     }
