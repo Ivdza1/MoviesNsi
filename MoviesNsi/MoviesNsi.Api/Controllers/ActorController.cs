@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesNsi.Application.Common.Interfaces;
+using MoviesNsi.Application.Common.Mappers;
 using MoviesNsi.Domain.Entities;
 
 namespace MoviesNsi.Controllers;
@@ -11,14 +12,19 @@ public class ActorController(IMoviesNsiDbContext dbContext) : ApiControllerBase
 {
 
     [HttpGet("Info")]
-    public async Task<IActionResult> Info()
+    public async Task<IActionResult> Info(string id)
     {
 
        var result = await dbContext.Actors
+            .Include(x => x.Movie)
             .Where(x => x.FullName == "Tom Kruz")
-            .ToListAsync();
+            .FirstOrDefaultAsync();
         
-        return Ok();
+        if(result == null)
+            return Ok();
+
+        var dto = result.ToDto();
+        return Ok(dto);
     }
 
     [HttpPost("Create")]

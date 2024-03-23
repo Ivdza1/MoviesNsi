@@ -7,14 +7,14 @@ using MoviesNsi.Domain.Entities;
 
 namespace MoviesNsi.Infrastructure.Contexts;
 
-public class MoviesNsiDbContext() : IdentityDbContext<ApplicationUser, 
+public class MoviesNsiDbContext(DbContextOptions<MoviesNsiDbContext> options) : IdentityDbContext<ApplicationUser, 
     ApplicationRole,
     string,
     IdentityUserClaim<string>,
     ApplicationUserRole,
     IdentityUserLogin<string>,
     IdentityRoleClaim<string>,
-    IdentityUserToken<string>>, IMoviesNsiDbContext
+    IdentityUserToken<string>>(options), IMoviesNsiDbContext
 {
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -26,6 +26,7 @@ public class MoviesNsiDbContext() : IdentityDbContext<ApplicationUser,
         => optionsBuilder.UseNpgsql("Host=localhost;Username=postgres;Password=root;Database=movies");
 
     public DbSet<Actor> Actors => Set<Actor>();
+    public DbSet<Movie> Movies => Set<Movie>();
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
