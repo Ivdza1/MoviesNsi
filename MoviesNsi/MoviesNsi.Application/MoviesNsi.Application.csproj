@@ -21,7 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Actors\Commands\" />
       <Folder Include="Movies\Commands\" />
     </ItemGroup>
 

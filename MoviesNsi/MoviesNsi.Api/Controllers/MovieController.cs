@@ -13,7 +13,7 @@ public class MovieController(IMoviesNsiDbContext dbContext) : ApiControllerBase
     public async Task<IActionResult> Info([FromQuery] MovieInfoQuery query) => Ok(await Mediator.Send(query));
 
 
-    [HttpPost]
+    [HttpPost("Create")]
     public async Task<IActionResult> Create()
     {
         var movie = new Movie(Guid.NewGuid(),"film", "film", 7);

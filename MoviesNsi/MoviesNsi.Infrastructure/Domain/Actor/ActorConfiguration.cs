@@ -14,7 +14,7 @@ public class ActorConfiguration : IEntityTypeConfiguration<MoviesNsi.Domain.Enti
 
         builder.HasOne(a => a.Movie)
             .WithMany(b => b.Actors)
-            .HasForeignKey(a => a.MovieId)
+            .HasForeignKey(a => a.Movie.Id)
             .IsRequired();
     }
 }

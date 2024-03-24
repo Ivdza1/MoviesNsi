@@ -7,12 +7,12 @@ namespace MoviesNsi.Application.Common.Mappers;
 [Mapper]
 public static partial class ActorMapper
 {
-    public static partial ActorInfoDto ToDto(this Domain.Entities.Actor entity);
-    public static partial Domain.Entities.Actor ToEntity(this Domain.Entities.Actor entity);
+    public static partial ActorInfoDto ToDto(this Actor entity);
+    public static partial Actor FromCreateDtoToEntity(this ActorCreateDto dto);
 
-    public static Domain.Entities.Actor ToCustomDto(this ActorCreateDto dto, Movie movie)
+    public static Actor ToCustomDto(this ActorCreateDto dto, Movie movie)
     {
-        var actor = new Domain.Entities.Actor(dto.FullName, dto.Age, dto.MovieId);
+        var actor = new Actor(dto.FullName, dto.Age);
         return actor;
     }
     

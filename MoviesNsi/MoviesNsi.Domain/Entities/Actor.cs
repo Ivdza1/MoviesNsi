@@ -4,17 +4,22 @@ public class Actor
 {
     private Actor() {}
 
-    public Actor(string fullName, int age, Guid movieId)
+    public Actor(string fullName, int age)
     {
         Id = Guid.NewGuid();
         FullName = fullName;
         Age = age;
-        MovieId = movieId;
+    }
+
+    public Actor AddMovie(Movie movie)
+    {
+        Movie = movie;
+        return this;
     }
     
     public Guid Id { get; private set; }
     public string FullName { get; private set; } 
     public int Age { get; private set; }
-    public Guid MovieId { get; private set; }
+    //public Guid MovieId { get; private set; }
     public Movie Movie { get; private set; }
 }

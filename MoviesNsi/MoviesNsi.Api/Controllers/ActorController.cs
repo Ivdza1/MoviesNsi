@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MoviesNsi.Application.Actors.Commands;
 using MoviesNsi.Application.Actors.Queries;
 using MoviesNsi.Application.Common.Dto.Actor;
 using MoviesNsi.Application.Common.Interfaces;
@@ -14,18 +15,5 @@ public class ActorController(IMoviesNsiDbContext dbContext) : ApiControllerBase
     public async Task<IActionResult> Info([FromQuery] ActorInfoQuery query) => Ok(await Mediator.Send(query));
 
     [HttpPost]
-    public async Task<IActionResult> Create(ActorCreateDto actorDto)
-    {
-        var movie = await dbContext.Movies
-            .Where(x => x.Id.Equals(actorDto.MovieId))
-            .FirstOrDefaultAsync();
-
-        if (movie == null) return Ok();
-
-        var entity = actorDto.ToCustomDto(movie);
-
-        dbContext.Actors.Add(entity);
-        await dbContext.SaveChangesAsync(new CancellationToken());
-        return Ok();
-    }
+    public async Task<IActionResult> Create(ActorCreateCommand command) => Ok(await Mediator.Send(command));
 }
