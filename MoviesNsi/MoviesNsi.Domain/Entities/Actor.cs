@@ -14,12 +14,13 @@ public class Actor
     public Actor AddMovie(Movie movie)
     {
         Movie = movie;
+        MovieId = movie.Id;
         return this;
     }
     
     public Guid Id { get; private set; }
     public string FullName { get; private set; } 
     public int Age { get; private set; }
-    //public Guid MovieId { get; private set; }
+    public Guid MovieId { get; private set; }
     public Movie Movie { get; private set; }
 }
