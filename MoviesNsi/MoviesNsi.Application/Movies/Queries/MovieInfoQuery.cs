@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MoviesNsi.Application.Common.Dto.Movie;
 using MoviesNsi.Application.Common.Interfaces;
 using MoviesNsi.Application.Common.Mappers;
+using MoviesNsi.Application.Exceptions;
 
 namespace MoviesNsi.Application.Movies.Queries;
 
@@ -15,8 +16,10 @@ public class MovieInfoQueryHandler(IMoviesNsiDbContext dbContext) : IRequestHand
         var result = await dbContext.Movies
             .Include(x => x.Actors)
             .Where(x => x.Id == Guid.Parse(request.Id))
-            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken);
 
+        //if (result == null) throw new NotFoundException("Movie not found.");
+        
         var dto = result?.ToDto();
         return dto;
     }

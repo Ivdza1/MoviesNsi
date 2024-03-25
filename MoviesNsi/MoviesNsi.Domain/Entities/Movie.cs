@@ -17,5 +17,9 @@ public class Movie
     public string Description { get; private set; }
     public int Rating { get; private set; }
     
-    public IList<Actor> Actors { get; } = new List<Actor>();
+    //public Actor Actor { get; private set; }
+    
+    //public Guid ActorId { get; private set; }
+    
+    public IList<Actor> Actors { get; private set; } = new List<Actor>();
 }

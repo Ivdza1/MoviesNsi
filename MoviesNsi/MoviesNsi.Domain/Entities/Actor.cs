@@ -14,7 +14,7 @@ public class Actor
     public Actor AddMovie(Movie movie)
     {
         Movie = movie;
-        MovieId = movie.Id;
+        //MovieId = movie.Id;
         return this;
     }
     
