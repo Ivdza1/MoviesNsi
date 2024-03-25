@@ -11,6 +11,13 @@ public class Movie
         Description = description;
         Rating = rating;
     }
+
+    public Movie(string name, string description, int rating)
+    {
+        Name = name;
+        Description = description;
+        Rating = rating;
+    }
     
     public Guid Id { get; private set; }
     public string Name { get; private set; }
@@ -19,7 +26,7 @@ public class Movie
     
     //public Actor Actor { get; private set; }
     
-    //public Guid ActorId { get; private set; }
+    public Guid ActorId { get; private set; }
     
     public IList<Actor> Actors { get; private set; } = new List<Actor>();
 }

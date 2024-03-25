@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesNsi.Application.Common.Dto.Movie;
 using MoviesNsi.Application.Common.Interfaces;
+using MoviesNsi.Application.Movies.Commands;
 using MoviesNsi.Application.Movies.Queries;
 using MoviesNsi.Auth.Constants;
 using MoviesNsi.Domain.Entities;
@@ -18,12 +19,5 @@ public class MovieController(IMoviesNsiDbContext dbContext) : ApiControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> Create(MovieCreateDto movieDto)
-    {
-        var movie = new Movie(Guid.NewGuid(),movieDto.Name, movieDto.Description, movieDto.Rating);
-        dbContext.Movies.Add(movie);
-        await dbContext.SaveChangesAsync(new CancellationToken());
-        
-        return Ok();
-    }
+    public async Task<IActionResult> Create(MovieCreateCommand command) => Ok(await Mediator.Send(command));
 }

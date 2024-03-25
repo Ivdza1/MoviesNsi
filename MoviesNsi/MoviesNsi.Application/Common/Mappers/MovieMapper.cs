@@ -8,11 +8,11 @@ namespace MoviesNsi.Application.Common.Mappers;
 public static partial class MovieMapper
 {
     public static partial MovieInfoDto ToDto(this Movie entity);
-    public static partial Movie FromCreateDtoToEntity(this Movie entity);
+    public static partial Movie FromCreateDtoToEntity(this MovieCreateDto dto);
 
     public static Movie ToCustomDto(this MovieCreateDto dto, Actor actor)
     {
-        var movie = new Movie(Guid.NewGuid(), dto.Name, dto.Description, dto.Rating);
+        var movie = new Movie(dto.Name, dto.Description, dto.Rating);
         return movie;
     }   
 }
