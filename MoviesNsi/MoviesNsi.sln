@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesNsi.Domain", "MoviesN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesNsi.Infrastructure", "MoviesNsi.Infrastructure\MoviesNsi.Infrastructure.csproj", "{8163BA23-F3F2-4A15-A5BA-948C483550F6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B73C8AE5-2899-4198-8112-43271780AA1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesNsi.FunctionalTests", "MoviesNsi.FunctionalTests\MoviesNsi.FunctionalTests.csproj", "{C9564AFF-72D0-456E-91BC-DCC81C2F75BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,12 @@ Global
 		{8163BA23-F3F2-4A15-A5BA-948C483550F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8163BA23-F3F2-4A15-A5BA-948C483550F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8163BA23-F3F2-4A15-A5BA-948C483550F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9564AFF-72D0-456E-91BC-DCC81C2F75BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9564AFF-72D0-456E-91BC-DCC81C2F75BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9564AFF-72D0-456E-91BC-DCC81C2F75BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9564AFF-72D0-456E-91BC-DCC81C2F75BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C9564AFF-72D0-456E-91BC-DCC81C2F75BC} = {B73C8AE5-2899-4198-8112-43271780AA1E}
 	EndGlobalSection
 EndGlobal

@@ -6,7 +6,9 @@ public class Movie
 
     public Movie(Guid id, string name, string description, int rating)
     {
-        Id = id;
+        
+        // promenjeno iz id = id u new guid
+        Id = Guid.NewGuid();
         Name = name;
         Description = description;
         Rating = rating;
