@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MoviesNsi.Application.Common.Interfaces;
 using MoviesNsi.Infrastructure.Configuration;
 using MoviesNsi.Infrastructure.Contexts;
+using MoviesNsi.Infrastructure.Services;
 
 namespace MoviesNsi.Infrastructure;
 
@@ -21,6 +22,7 @@ public static class DependencyInjection
                     x.MigrationsAssembly(typeof(MoviesNsiDbContext).Assembly.FullName)));
 
         services.AddScoped<IMoviesNsiDbContext>(provider => provider.GetRequiredService<MoviesNsiDbContext>());
+        services.AddScoped<IActorService, ActorService>();
         
         return services;
     }
