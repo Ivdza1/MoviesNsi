@@ -2,33 +2,28 @@ using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using Microsoft.Extensions.DependencyInjection;
 using MoviesNsi.Application.Common.Dto.Actor;
-using MoviesNsi.Domain.Entities;
-using MoviesNsi.Infrastructure.Contexts;
+using MoviesNsi.BaseTests.Builders.Domain;
 using Xunit;
 
 namespace MoviesNsi.FunctionalTests.Actors.Queries;
 
-public class ActorInfoQueryTests(CustomWebApplicationFactory<Program> factory) : IClassFixture<CustomWebApplicationFactory<Program>>
+public class ActorInfoQueryTests : BaseTests
 {
-    private readonly HttpClient _client = factory.CreateClient();
 
     [Fact]
     public async Task ActorInfoQueryTest_GivenValidActorId_StatusOk()
     {
         
-        using var scope = factory.Services.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<MoviesNsiDbContext>();
-        
         // Given
-        var movie = new Movie("-", "-", 1);
-        var actor = new Actor("-", 5).AddMovie(movie);
-        await dbContext.Actors.AddAsync(actor);
-        await dbContext.SaveChangesAsync();
+        var movie = new MovieBuilder().Build();
+        var actor = new ActorBuilder().Build().AddMovie(movie);
 
+        await MoviesNsiDbContext.Actors.AddAsync(actor);
+        await MoviesNsiDbContext.SaveChangesAsync();
+        
         // When
-        var response = await _client.GetAsync($"/api/Actor/Info?Id={actor.Id.ToString()}");
+        var response = await Client.GetAsync($"/api/Actor/Info?Id={actor.Id.ToString()}");
         
         // Then
         using var _ = new AssertionScope();
@@ -50,7 +45,7 @@ public class ActorInfoQueryTests(CustomWebApplicationFactory<Program> factory) :
         // Given
 
         // When
-        var response = await _client.GetAsync("/api/Actor/Info");
+        var response = await Client.GetAsync("/api/Actor/Info");
         
         // Then
         using var _ = new AssertionScope();
@@ -65,17 +60,14 @@ public class ActorInfoQueryTests(CustomWebApplicationFactory<Program> factory) :
     public async Task ActorInfoQueryTest_GivenNotExistingActorId_NotFound()
     {
         
-        using var scope = factory.Services.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<MoviesNsiDbContext>();
-        
         // Given
-        var movie = new Movie("-", "-", 1);
-        var actor = new Actor("-", 5).AddMovie(movie);
-        await dbContext.Actors.AddAsync(actor);
-        await dbContext.SaveChangesAsync();
+        var movie = new MovieBuilder().Build();
+        var actor = new ActorBuilder().Build().AddMovie(movie);
+        await MoviesNsiDbContext.Actors.AddAsync(actor);
+        await MoviesNsiDbContext.SaveChangesAsync();
 
         // When
-        var response = await _client.GetAsync($"/api/Actor/Info?Id={Guid.NewGuid()}");
+        var response = await Client.GetAsync($"/api/Actor/Info?Id={Guid.NewGuid()}");
         
         // Then
         using var _ = new AssertionScope();
@@ -83,5 +75,9 @@ public class ActorInfoQueryTests(CustomWebApplicationFactory<Program> factory) :
             .Should()
             .Be(HttpStatusCode.NotFound);
 
+    }
+
+    public ActorInfoQueryTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+    {
     }
 }

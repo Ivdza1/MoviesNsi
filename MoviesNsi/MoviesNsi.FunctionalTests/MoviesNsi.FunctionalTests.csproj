@@ -27,11 +27,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MoviesNsi.Api\MoviesNsi.Api.csproj" />
+      <ProjectReference Include="..\MoviesNsi.BaseTests\MoviesNsi.BaseTests.csproj" />
       <ProjectReference Include="..\MoviesNsi.Infrastructure\MoviesNsi.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Actors\Commands\" />
     </ItemGroup>
 
 </Project>
