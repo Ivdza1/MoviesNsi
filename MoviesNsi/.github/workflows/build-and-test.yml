@@ -1,0 +1,25 @@
+name: MoviesNsi App start Tests
+
+on:
+  push:
+    branches:
+      - "feature/*" # matches every feature branch containing a singe '/'
+      - "main" # matches main branch '/'
+      - "!release/**" # excludes release
+    
+jobs: 
+  backend-build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: action/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '8.0.x'
+      - name: Set Test Environment Variable
+        run: echo "ASPNETCORE_ENVIRONMENT=Test" >> $GITHUB_ENV
+      - name: Build
+        run: dotnet build --configuration Release MoviesNsi.sln
+      - name: Test
+        run: dotnet test --configuration Release MoviesNsi.sln --no-build --verbosity normal --collect:"X-Plat Code Coverage" --logger trx --results-directory coverage
+      

@@ -34,16 +34,15 @@ public class ActorCreateCommandTests : BaseTests
         
         await MoviesNsiDbContext.Movies.AddAsync(movie);
         await MoviesNsiDbContext.SaveChangesAsync();
-
-        var mock = new Mock<IMovieService>();
-
-        mock.Setup(x => x.CreateAsync()).Returns("Test");
-
+        
         var actorDto = new ActorCreateDtoBuilder().WithMovieId(movie.Id).Build();
         var actor = new ActorCreateCommandBuilder().WithActorCreateDto(actorDto).Build();
 
         var jsonActor = JsonSerializer.Serialize(actor);
         var contentRequest = new StringContent(jsonActor, Encoding.UTF8, "application/json");
+        
+        
+        MockMovieService.Setup(x => x.CreateAsync()).Returns("Test");
         
         // When
         var response = await Client.PostAsync("/api/Actor/Create", contentRequest, new CancellationToken());
@@ -57,6 +56,8 @@ public class ActorCreateCommandTests : BaseTests
         var content = await response.Content.ReadFromJsonAsync<ActorInfoDto>();
         content.Should()
             .NotBeNull();
+        
+        MockMovieService.Verify(x => x.CreateAsync(), Times.Once);
 
     }
 
