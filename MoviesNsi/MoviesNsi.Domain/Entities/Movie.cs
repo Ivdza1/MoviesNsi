@@ -1,3 +1,5 @@
+using MoviesNsi.Domain.Enums;
+
 namespace MoviesNsi.Domain.Entities;
 
 public class Movie
@@ -23,6 +25,8 @@ public class Movie
     public string Name { get; private set; }
     public string Description { get; private set; }
     public int Rating { get; private set; }
+    
+    public Category Category { get; private set; }
     
     //public Actor Actor { get; private set; }
     
