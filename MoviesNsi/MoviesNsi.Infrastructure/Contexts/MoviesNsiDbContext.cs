@@ -23,7 +23,13 @@ public class MoviesNsiDbContext(DbContextOptions<MoviesNsiDbContext> options) : 
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Host=localhost;Username=postgres;Password=root;Database=movies");
+    {
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Test")
+        {
+            optionsBuilder.UseNpgsql("Host=localhost;Username=postgres;Password=root;Database=movies");
+        }
+    }
+        
 
     public DbSet<Actor> Actors => Set<Actor>();
     public DbSet<Movie> Movies => Set<Movie>();
