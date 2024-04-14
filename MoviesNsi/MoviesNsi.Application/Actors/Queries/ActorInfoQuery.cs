@@ -3,14 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using MoviesNsi.Application.Common.Dto.Actor;
 using MoviesNsi.Application.Common.Interfaces;
 using MoviesNsi.Application.Common.Mappers;
+using MoviesNsi.Application.Exceptions;
 
 namespace MoviesNsi.Application.Actors.Queries;
 
-public record ActorInfoQuery(string Id) : IRequest<ActorInfoDto?>;
+public record ActorInfoQuery(string Id) : IRequest<ActorInfoDto>;
 
-public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext) : IRequestHandler<ActorInfoQuery, ActorInfoDto?>
+public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext) : IRequestHandler<ActorInfoQuery, ActorInfoDto>
 {
-    public async Task<ActorInfoDto?> Handle(ActorInfoQuery request, CancellationToken cancellationToken)
+    public async Task<ActorInfoDto> Handle(ActorInfoQuery request, CancellationToken cancellationToken)
     {
 
         var result = await dbContext.Actors
@@ -18,7 +19,13 @@ public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext) : IRequestHand
             .Where(x => x.Id == Guid.Parse(request.Id))
             .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
-        var dto = result?.ToDto();
+        if (result == null)
+        {
+            throw new NotFoundException("Actor not found.", new { request.Id });
+        }
+        
+        var dto = result.ToDto();
+        
         return dto;
     }
 }

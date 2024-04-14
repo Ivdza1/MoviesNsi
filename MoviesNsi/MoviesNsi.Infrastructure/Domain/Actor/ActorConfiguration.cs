@@ -8,7 +8,7 @@ public class ActorConfiguration : IEntityTypeConfiguration<MoviesNsi.Domain.Enti
     public void Configure(EntityTypeBuilder<MoviesNsi.Domain.Entities.Actor> builder)
     {
         builder.ToTable("Actors");
-        builder.Property(x => x.Id).ValueGeneratedNever();
+        builder.Property(x => x.Id);
         builder.Property<Guid>("MovieId");
         builder.HasIndex("MovieId");
 

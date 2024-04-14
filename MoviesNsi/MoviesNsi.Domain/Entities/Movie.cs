@@ -8,17 +8,15 @@ public class Movie
     {
         
         // promenjeno iz id = id u new guid
-        Id = Guid.NewGuid();
+        Id = id != Guid.Empty ? id : Guid.NewGuid();
         Name = name;
         Description = description;
         Rating = rating;
     }
 
-    public Movie(string name, string description, int rating)
+    public Movie(string name, string description, int rating) : this(Guid.NewGuid(), name, description, rating)
     {
-        Name = name;
-        Description = description;
-        Rating = rating;
+       
     }
     
     public Guid Id { get; private set; }
@@ -28,7 +26,7 @@ public class Movie
     
     //public Actor Actor { get; private set; }
     
-    public Guid ActorId { get; private set; }
+    //public Guid ActorId { get; private set; }
     
     public IList<Actor> Actors { get; private set; } = new List<Actor>();
 }

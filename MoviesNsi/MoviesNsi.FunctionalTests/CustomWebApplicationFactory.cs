@@ -13,10 +13,12 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
     {
         builder.ConfigureServices(services =>
         {
+            // uklanjamo stari db context 
             services.RemoveAll<MoviesNsiDbContext>();
 
             var dbName = Guid.NewGuid().ToString();
-
+            
+            // dodajemo In-Memory db context
             services.AddDbContext<MoviesNsiDbContext>(options =>
             {
                 options.UseInMemoryDatabase(dbName);
