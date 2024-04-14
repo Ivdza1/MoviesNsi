@@ -23,6 +23,7 @@ public static class DependencyInjection
 
         services.AddScoped<IMoviesNsiDbContext>(provider => provider.GetRequiredService<MoviesNsiDbContext>());
         services.AddScoped<IActorService, ActorService>();
+        services.AddScoped<IMovieService, MovieService>();
         
         return services;
     }

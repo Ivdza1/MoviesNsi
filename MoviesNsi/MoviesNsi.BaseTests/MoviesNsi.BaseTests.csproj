@@ -7,12 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Builders\Commands\" />
-      <Folder Include="Builders\Dto\" />
       <Folder Include="Builders\Queries\" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MoviesNsi.Application\MoviesNsi.Application.csproj" />
       <ProjectReference Include="..\MoviesNsi.Domain\MoviesNsi.Domain.csproj" />
     </ItemGroup>
 

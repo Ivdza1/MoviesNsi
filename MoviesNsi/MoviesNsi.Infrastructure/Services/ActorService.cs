@@ -6,10 +6,12 @@ using MoviesNsi.Application.Exceptions;
 
 namespace MoviesNsi.Infrastructure.Services;
 
-public class ActorService(IMoviesNsiDbContext dbContext) : IActorService
+public class ActorService(IMoviesNsiDbContext dbContext, IMovieService movieService) : IActorService
 {
     public async Task<ActorInfoDto> CreateAsync(ActorCreateDto actor, CancellationToken cancellationToken)
     {
+        var test = movieService.CreateAsync();
+        
         var movie = await dbContext.Movies
             .Where(x => x.Id == actor.MovieId)
             .FirstOrDefaultAsync(cancellationToken);
