@@ -26,8 +26,6 @@ public class Movie
     public string Description { get; private set; }
     public int Rating { get; private set; }
     
-    public Category Category { get; private set; }
-    
     //public Actor Actor { get; private set; }
     
     //public Guid ActorId { get; private set; }
