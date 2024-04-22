@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MoviesNsi.Domain.Enums;
 
 namespace MoviesNsi.Infrastructure.Domain.Movie;
 
@@ -9,5 +10,10 @@ public class MovieConfiguration : IEntityTypeConfiguration<MoviesNsi.Domain.Enti
     {
         builder.ToTable("Movies");
         builder.Property(x => x.Id).ValueGeneratedNever();
+
+        builder.Property(b => b.Category)
+            .IsRequired()
+            .HasDefaultValue(Category.Thriller)
+            .HasConversion(p => p.Value, p => Category.FromValue(p));
     }
 }

@@ -1,4 +1,5 @@
 using MoviesNsi.Domain.Entities;
+using MoviesNsi.Domain.Enums;
 
 namespace MoviesNsi.BaseTests.Builders.Domain;
 
@@ -7,7 +8,8 @@ public class MovieBuilder
     private string _name = "-";
     private string _description = "-";
     private int _rating = 1;
-    public Movie Build() => new(_name, _description, _rating);
+    private Category _category = Category.Thriller;
+    public Movie Build() => new(_name, _description, _rating, _category);
 
     public MovieBuilder WithName(string name)
     {
@@ -24,6 +26,12 @@ public class MovieBuilder
     public MovieBuilder WithRating(int rating)
     {
         _rating = rating;
+        return this;
+    }
+    
+    public MovieBuilder WithCategory(Category category)
+    {
+        _category = category;
         return this;
     }
 }

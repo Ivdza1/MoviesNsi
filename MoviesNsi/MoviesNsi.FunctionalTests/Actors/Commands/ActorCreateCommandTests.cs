@@ -26,7 +26,7 @@ public class ActorCreateCommandTests : BaseTests
     };*/
     
     [Fact]
-    public async Task ActorCreateCommandTest_GivenValidActorId_StatusOk()
+    public async Task ActorCreateCommandTest_GivenValidActor_StatusOk()
     {
   
         // Given

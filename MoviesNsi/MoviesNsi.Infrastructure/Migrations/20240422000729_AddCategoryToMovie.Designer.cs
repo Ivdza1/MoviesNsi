@@ -2,8 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MoviesNsi.Domain.Enums;
 using MoviesNsi.Infrastructure.Contexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MoviesNsi.Infrastructure.Migrations
 {
     [DbContext(typeof(MoviesNsiDbContext))]
-    partial class MoviesNsiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240422000729_AddCategoryToMovie")]
+    partial class AddCategoryToMovie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -343,9 +345,7 @@ namespace MoviesNsi.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<int>("Category")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(2);
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .IsRequired()

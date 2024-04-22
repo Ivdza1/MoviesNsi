@@ -18,9 +18,9 @@ public class MovieInfoQueryHandler(IMoviesNsiDbContext dbContext) : IRequestHand
             .Where(x => x.Id == Guid.Parse(request.Id))
             .FirstOrDefaultAsync(cancellationToken);
 
-        //if (result == null) throw new NotFoundException("Movie not found.");
+        if (result == null) throw new NotFoundException("Movie not found.", new { request.Id });
         
-        var dto = result?.ToDto();
+        var dto = result.ToDto();
         return dto;
     }
 }

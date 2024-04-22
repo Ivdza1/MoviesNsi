@@ -4,7 +4,7 @@ namespace MoviesNsi.Domain.Enums;
 public abstract class Category : SmartEnum<Category>
 {
     public static Category SciFi = new SciFiCategory();
-    public static Category Thriller;
+    public static Category Thriller = new ThrillerCategory();
     
     public abstract string Description { get; }
 

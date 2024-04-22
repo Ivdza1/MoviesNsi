@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesNsi.Domain.Enums;
 using MoviesNsi.Infrastructure.Contexts;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MoviesNsi.Infrastructure.Migrations
 {
     [DbContext(typeof(MoviesNsiDbContext))]
-    partial class MoviesNsiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240422001453_AddCategoryToMovie3")]
+    partial class AddCategoryToMovie3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

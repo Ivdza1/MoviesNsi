@@ -33,7 +33,7 @@ public class ActorInfoQueryTests : BaseTests
 
         var content = await response.Content.ReadFromJsonAsync<ActorInfoDto>();
         content.Should().NotBeNull();
-        content!.fullName.Should().Be(actor.FullName);
+        content!.FullName.Should().Be(actor.FullName);
         content!.MovieName.Should().Be(movie.Name);
         
 
