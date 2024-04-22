@@ -1,3 +1,4 @@
+using MoviesNsi.Application.Common.Dto.Actor;
 using MoviesNsi.Application.Common.Dto.Movie;
 using MoviesNsi.Domain.Entities;
 using MoviesNsi.Domain.Enums;
@@ -8,7 +9,14 @@ namespace MoviesNsi.Application.Common.Mappers;
 [Mapper]
 public static partial class MovieMapper
 {
-    public static partial MovieInfoDto ToDto(this Movie entity);
+    public static MovieInfoDto ToDto(this Movie entity)
+    {
+        var dto = 
+            new MovieInfoDto
+                (entity.Name, entity.Description, entity.Rating, new List<ActorInfoDto>(), entity.Category.Name, 
+                    entity.Category.Subcategories.Select(x => x.Name).ToList());
+        return dto;
+    }
 
     public static Movie FromCreateDtoToEntity(this MovieCreateDto dto)
     {
