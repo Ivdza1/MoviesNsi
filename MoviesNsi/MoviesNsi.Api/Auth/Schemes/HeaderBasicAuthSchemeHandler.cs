@@ -3,7 +3,9 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using MoviesNsi.Application.Common.Extensions;
 using MoviesNsi.Application.Common.Interfaces;
+using MoviesNsi.Application.Configuration;
 using MoviesNsi.Auth.Options;
 
 namespace MoviesNsi.Auth.Schemes;
@@ -11,15 +13,19 @@ namespace MoviesNsi.Auth.Schemes;
 public class HeaderBasicAuthSchemeHandler : AuthenticationHandler<HeaderBasicAuthSchemeOptions>
 {
     private readonly IMoviesNsiDbContext _dbContext;
+    private readonly AesEncryptionConfiguration _aesEncryptionConfiguration;
+        
     [Obsolete("Obsolete")]
-    public HeaderBasicAuthSchemeHandler(IOptionsMonitor<HeaderBasicAuthSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, IMoviesNsiDbContext dbContext) : base(options, logger, encoder, clock)
+    public HeaderBasicAuthSchemeHandler(IOptionsMonitor<HeaderBasicAuthSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, IMoviesNsiDbContext dbContext, IOptions<AesEncryptionConfiguration> aesConfiguration) : base(options, logger, encoder, clock)
     {
         _dbContext = dbContext;
+        _aesEncryptionConfiguration = aesConfiguration.Value;
     }
 
-    public HeaderBasicAuthSchemeHandler(IOptionsMonitor<HeaderBasicAuthSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, IMoviesNsiDbContext dbContext) : base(options, logger, encoder)
+    public HeaderBasicAuthSchemeHandler(IOptionsMonitor<HeaderBasicAuthSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, IMoviesNsiDbContext dbContext, IOptions<AesEncryptionConfiguration> aesConfiguration) : base(options, logger, encoder)
     {
         _dbContext = dbContext;
+        _aesEncryptionConfiguration = aesConfiguration.Value;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -36,7 +42,7 @@ public class HeaderBasicAuthSchemeHandler : AuthenticationHandler<HeaderBasicAut
             
             var user = Options.Users.SingleOrDefault(user =>
                            user.Username.Equals(username, StringComparison.OrdinalIgnoreCase) &&
-                           user.Password.Equals(password, StringComparison.OrdinalIgnoreCase)) ??
+                           user.Password.AesDecrypt(_aesEncryptionConfiguration.Key).Equals(password, StringComparison.OrdinalIgnoreCase)) ??
                        throw new InvalidOperationException("Invalid username or password.");
 
             var claims = new List<Claim> { new(ClaimTypes.NameIdentifier, username) };

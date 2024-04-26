@@ -1,8 +1,11 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MoviesNsi.Application.Common.Dto.Actor;
+using MoviesNsi.Application.Common.Extensions;
 using MoviesNsi.Application.Common.Interfaces;
 using MoviesNsi.Application.Common.Mappers;
+using MoviesNsi.Application.Configuration;
 using MoviesNsi.Application.Exceptions;
 using MoviesNsi.Domain.Common.Extensions;
 
@@ -10,7 +13,7 @@ namespace MoviesNsi.Application.Actors.Queries;
 
 public record ActorInfoQuery(string Id) : IRequest<ActorInfoDto>;
 
-public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext) : IRequestHandler<ActorInfoQuery, ActorInfoDto>
+public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext, IOptions<AesEncryptionConfiguration> aesConfiguration) : IRequestHandler<ActorInfoQuery, ActorInfoDto>
 {
     public async Task<ActorInfoDto> Handle(ActorInfoQuery request, CancellationToken cancellationToken)
     {
@@ -27,7 +30,8 @@ public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext) : IRequestHand
         
         
         var dto = result.ToDto();
-
+        
+        // json (de)serijalizacija
         var testJson = dto.Serialize(SerializerExtensions.DefaultOptions);
         var testJson2 = dto.Serialize(SerializerExtensions.SettingsWebOptions);
         var testJson3 = dto.Serialize(SerializerExtensions.SettingsHardwareOptions);
@@ -37,6 +41,11 @@ public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext) : IRequestHand
         var deserializationDto3 = testJson3.Deserialize<ActorInfoDto>(SerializerExtensions.SettingsHardwareOptions);
 
         var validateResult = await new ActorInfoQueryModelValidator().ValidateAsync(request, cancellationToken);
+        
+        // test encrypt
+        var testPassword = "test123";
+        var testPassEncrypt = testPassword.AesEncrypt(aesConfiguration.Value.Key);
+        var testPassDecrypt = testPassEncrypt.AesDecrypt(aesConfiguration.Value.Key);
         
         return dto;
     }

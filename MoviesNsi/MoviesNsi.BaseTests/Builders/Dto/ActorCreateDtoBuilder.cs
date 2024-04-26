@@ -5,7 +5,7 @@ namespace MoviesNsi.BaseTests.Builders.Dto;
 public class ActorCreateDtoBuilder
 {
     private Guid _movieId;
-    private string _fullName;
+    private string _fullName = default!;
     private int _age;
     public ActorCreateDto Build() => new(_movieId, _fullName, _age);
 
