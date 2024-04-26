@@ -1,3 +1,5 @@
+using Ardalis.GuardClauses;
+
 namespace MoviesNsi.Domain.Entities;
 
 public class Actor
@@ -7,7 +9,7 @@ public class Actor
     public Actor(string fullName, int age)
     {
         Id = Guid.NewGuid();
-        FullName = fullName;
+        FullName = Guard.Against.NullOrEmpty(fullName);
         Age = age;
     }
 

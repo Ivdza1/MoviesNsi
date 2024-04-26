@@ -1,3 +1,4 @@
+using Ardalis.GuardClauses;
 using MoviesNsi.Domain.Enums;
 
 namespace MoviesNsi.Domain.Entities;
@@ -11,10 +12,10 @@ public class Movie
         
         // promenjeno iz id = id u new guid
         Id = id != Guid.Empty ? id : Guid.NewGuid();
-        Name = name;
-        Description = description;
+        Name = Guard.Against.NullOrEmpty(name);
+        Description = Guard.Against.StringTooShort(description, 1);
         Rating = rating;
-        Category = category;
+        Category = Guard.Against.Null(category);
     }
 
     public Movie(string name, string description, int rating, Category category) 
