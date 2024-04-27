@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MoviesNsi.Application.Common.Dto.Actor;
 using MoviesNsi.Application.Common.Extensions;
@@ -13,7 +14,7 @@ namespace MoviesNsi.Application.Actors.Queries;
 
 public record ActorInfoQuery(string Id) : IRequest<ActorInfoDto>;
 
-public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext, IOptions<AesEncryptionConfiguration> aesConfiguration) : IRequestHandler<ActorInfoQuery, ActorInfoDto>
+public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext, IOptions<AesEncryptionConfiguration> aesConfiguration, ICurrentUserService currentUser) : IRequestHandler<ActorInfoQuery, ActorInfoDto>
 {
     public async Task<ActorInfoDto> Handle(ActorInfoQuery request, CancellationToken cancellationToken)
     {
@@ -46,6 +47,7 @@ public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext, IOptions<AesEn
         var testPassword = "test123";
         var testPassEncrypt = testPassword.AesEncrypt(aesConfiguration.Value.Key);
         var testPassDecrypt = testPassEncrypt.AesDecrypt(aesConfiguration.Value.Key);
+        
         
         return dto;
     }

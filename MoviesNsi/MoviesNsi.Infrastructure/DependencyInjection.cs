@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MoviesNsi.Application.Common.Interfaces;
 using MoviesNsi.Infrastructure.Configuration;
 using MoviesNsi.Infrastructure.Contexts;
+using MoviesNsi.Infrastructure.Identity;
 using MoviesNsi.Infrastructure.Services;
 
 namespace MoviesNsi.Infrastructure;
@@ -27,6 +28,12 @@ public static class DependencyInjection
         services.AddScoped<IMoviesNsiDbContext>(provider => provider.GetRequiredService<MoviesNsiDbContext>());
         services.AddScoped<IActorService, ActorService>();
         services.AddScoped<IMovieService, MovieService>();
+        
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.Configure<JwtConfiguration>(configuration.GetSection("JwtConfiguration"));
         
         return services;
     }
