@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MoviesNsi.Application.Common.Interfaces;
+using MoviesNsi.Domain.Entities;
+using MoviesNsi.Infrastructure.Auth.Extensions;
 using MoviesNsi.Infrastructure.Configuration;
 using MoviesNsi.Infrastructure.Contexts;
 using MoviesNsi.Infrastructure.Identity;
@@ -24,6 +27,13 @@ public static class DependencyInjection
                         x =>
                             x.MigrationsAssembly(typeof(MoviesNsiDbContext).Assembly.FullName)));
         }
+
+        services.AddIdentity<ApplicationUser, ApplicationRole>()
+            .AddRoleManager<RoleManager<ApplicationRole>>()
+            .AddUserManager<ApplicationUserManager>()
+            .AddEntityFrameworkStores<MoviesNsiDbContext>()
+            .AddDefaultTokenProviders()
+            .AddPasswordlessLoginTokenProvider();
 
         services.AddScoped<IMoviesNsiDbContext>(provider => provider.GetRequiredService<MoviesNsiDbContext>());
         services.AddScoped<IActorService, ActorService>();
