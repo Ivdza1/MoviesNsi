@@ -33,6 +33,7 @@ public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext, IOptions<AesEn
         var dto = result.ToDto();
         
         // json (de)serijalizacija
+        /*
         var testJson = dto.Serialize(SerializerExtensions.DefaultOptions);
         var testJson2 = dto.Serialize(SerializerExtensions.SettingsWebOptions);
         var testJson3 = dto.Serialize(SerializerExtensions.SettingsHardwareOptions);
@@ -47,7 +48,7 @@ public class ActorInfoQueryHandler(IMoviesNsiDbContext dbContext, IOptions<AesEn
         var testPassword = "test123";
         var testPassEncrypt = testPassword.AesEncrypt(aesConfiguration.Value.Key);
         var testPassDecrypt = testPassEncrypt.AesDecrypt(aesConfiguration.Value.Key);
-        
+        */
         
         return dto;
     }
