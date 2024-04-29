@@ -13,7 +13,7 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
 {
 
     public Mock<IMovieService> MockMovieService { get; } = new();
-    public Mock<IActorService> MockActorService { get; } = new();
+
     
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {

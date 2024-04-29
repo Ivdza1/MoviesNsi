@@ -9,7 +9,6 @@ public class MovieBuilder
     private string _description = "-";
     private int _rating = 1;
     private Category _category = Category.Thriller;
-    public Movie Build() => new(_name, _description, _rating, _category);
 
     public MovieBuilder WithName(string name)
     {
@@ -34,4 +33,6 @@ public class MovieBuilder
         _category = category;
         return this;
     }
+    
+    public Movie Build() => new(_name, _description, _rating, _category);
 }

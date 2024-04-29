@@ -6,7 +6,7 @@ public class ActorBuilder
 {
     private string _fullName = "-";
     private int _age = 1;
-    public Actor Build() => new(_fullName, _age);
+
     
     public ActorBuilder WithFullName(string fullName)
     {
@@ -19,5 +19,7 @@ public class ActorBuilder
         _age = age;
         return this;
     }
+    
+    public Actor Build() => new(_fullName, _age);
 
 }
