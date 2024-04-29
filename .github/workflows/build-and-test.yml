@@ -19,7 +19,7 @@ jobs:
       - name: Set Test Environment Variable
         run: echo "ASPNETCORE_ENVIRONMENT=Test" >> $GITHUB_ENV
       - name: Build
-        run: dotnet build --configuration Release MoviesNsi.sln
+        run: dotnet build --configuration Release MoviesNsi/MoviesNsi.sln
       - name: Test
-        run: dotnet test --configuration Release MoviesNsi.sln --no-build --verbosity normal --collect:"X-Plat Code Coverage" --logger trx --results-directory coverage
+        run: dotnet test --configuration Release MoviesNsi/MoviesNsi.sln --no-build --verbosity normal --collect:"X-Plat Code Coverage" --logger trx --results-directory coverage
       
