@@ -21,4 +21,10 @@ public class ActorController(IMoviesNsiDbContext dbContext) : ApiControllerBase
         var command = dto.Json.Deserialize<ActorCreateCommand>(SerializerExtensions.SettingsWebOptions);
         return Ok(await Mediator.Send(command!));
     }
+
+    [HttpPut]
+    public async Task<IActionResult> Update(ActorUpdateCommand command)
+    {
+        return Ok(await Mediator.Send(command));
+    }
 }

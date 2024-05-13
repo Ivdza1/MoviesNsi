@@ -26,4 +26,25 @@ public class ActorService(IMoviesNsiDbContext dbContext, IMovieService movieServ
 
         return actorEntity.ToDto();
     }
+    
+
+    public async Task<ActorInfoDto> UpdateAsync(Guid actorId, ActorUpdateDto actor, CancellationToken cancellationToken)
+    {
+        var actorEntity = await dbContext.Actors
+            .Where(a => a.Id == actorId)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (actorEntity == null)
+            throw new NotFoundException("Actor not found.");
+
+        if (!string.IsNullOrEmpty(actor.FullName))
+            actorEntity.UpdateFullName(actor.FullName);
+        
+        actorEntity.UpdateAge(actor.Age);
+        
+        
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return actorEntity.ToDto();
+    }
 }

@@ -19,6 +19,16 @@ public class Actor
         //MovieId = movie.Id;
         return this;
     }
+
+    public void UpdateFullName(string fullName)
+    {
+        FullName = fullName;
+    }
+
+    public void UpdateAge(int age)
+    {
+        Age = age;
+    }
     
     public Guid Id { get; private set; }
     public string FullName { get; private set; } 
